@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:money_manager_ap/DataBase/Data.dart';
-import 'package:money_manager_ap/DataBase/SqliteFunction.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:money_manager_ap/DataBase/providerModel.dart';
+import 'package:money_manager_ap/Tabs/Controllers.dart';
+import 'package:money_manager_ap/Tabs/TrasTab/GetDataPage/AppBar.dart';
 import 'package:money_manager_ap/Tabs/TrasTab/OneDayTransaction.dart';
 import 'package:provider/provider.dart';
 
@@ -20,56 +21,69 @@ class _DailyPageState extends State<DailyPage> {
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<TransactionProvider>(context);
-    return Scaffold(
-      appBar: AppBar(title: Text('Money Manager'),),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => _incrementCounter(provider),
-          tooltip: 'Increment',
-          child: Icon(Icons.add),
-        ),
-        body: Consumer<TransactionProvider>(
-          builder: (context, transactionProvider, child) {
-            return ListView.builder(
-              itemBuilder: (context, index) {
-                return OneDayTransaction(
-                  day: transactionProvider.transactionsAllDates[index].day,
-                  month: transactionProvider.transactionsAllDates[index].month,
-                  year: transactionProvider.transactionsAllDates[index].year,
-                  oneDayTransactions: transactionProvider.getOneDayTransactions(
-                      transactionProvider.transactionsAllDates[index].day,
-                      transactionProvider.transactionsAllDates[index].month,
-                      transactionProvider.transactionsAllDates[index].year),
-                );
-              },
-              itemCount: transactionProvider.transactionsAllDates.length,
-            );
-          },
-        ));
+    return Consumer<TransactionProvider>(
+      builder: (context, transactionProvider, child) {
+        return Column(
+          children: [
+            SolidAppBar(
+              title: Text(
+                'Money Manager',
+                textScaleFactor: 1,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              // backgroundColor: Colors.blue,
+              // actions: [Container()],
+            ),
+            Expanded(
+              child: NotificationListener<OverscrollIndicatorNotification>(
+                // ignore: missing_return
+                onNotification: (overScroll) {
+                  overScroll.disallowGlow();
+                },
+                child: CustomScrollView(
+                  controller: listController,
+                  slivers: [
+                    SliverList(
+                      delegate: new SliverChildBuilderDelegate(
+                        (context, index) {
+                          return OneDayTransaction(
+                            day: transactionProvider
+                                .transactionsAllDates[index].day,
+                            month: transactionProvider
+                                .transactionsAllDates[index].month,
+                            year: transactionProvider
+                                .transactionsAllDates[index].year,
+                            oneDayTransactions:
+                                transactionProvider.getOneDayTransactions(
+                                    transactionProvider
+                                        .transactionsAllDates[index].day,
+                                    transactionProvider
+                                        .transactionsAllDates[index].month,
+                                    transactionProvider
+                                        .transactionsAllDates[index].year),
+                          );
+                        },
+                        childCount:
+                            transactionProvider.transactionsAllDates.length,
+                      ),
+                    ),
+                    SliverList(
+                      delegate: new SliverChildBuilderDelegate(
+                        (context, index) {
+                          return Container(
+                            height: 70,
+                          );
+                        },
+                        childCount: 1,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
-}
-
-void _incrementCounter(TransactionProvider provider) async {
-  var insertor;
-  checkTableExist();
-  try {
-    insertor = await insertTranscation(Transaction(
-        transactionId: 1,
-        note: 'for Transport',
-        price: 12000,
-        destenationAccount: 'Transportation',
-        extraNote: 'from home to work',
-        originAccount: 'Cash',
-        year: 2021,
-        month: 9,
-        day: 20,
-        hour: 17,
-        minute: 30,
-        transactionType: 'Income'));
-  } catch (e) {
-    print('Error3: $e');
-  }
-
-  print(insertor);
-  provider.loadInfo();
 }

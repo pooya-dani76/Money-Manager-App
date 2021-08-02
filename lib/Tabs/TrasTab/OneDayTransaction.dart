@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager_ap/DataBase/Data.dart';
 import 'package:money_manager_ap/DataBase/providerModel.dart';
+import 'package:money_manager_ap/Tabs/Controllers.dart';
 import 'package:money_manager_ap/Tabs/TrasTab/TransactionTile.dart';
 import 'package:provider/provider.dart';
 import 'TransactionHeader.dart';
@@ -42,9 +43,12 @@ class _OneDayTransactionState extends State<OneDayTransaction> {
                 month: widget.month,
                 year: widget.year,
               ),
+              Divider(height: 1,indent: 20, endIndent: 20,),
               Expanded(
                   child: Container(
                 child: ListView.builder(
+                  padding: EdgeInsets.all(0),
+                  controller: listController,
                   itemBuilder: (context, index) {
                     return TransactionTile(
                       transaction: widget.oneDayTransactions[index],

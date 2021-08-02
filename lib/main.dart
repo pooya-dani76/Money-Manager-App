@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager_ap/DataBase/providerModel.dart';
 import 'package:money_manager_ap/DataBase/SqliteFunction.dart';
+import 'package:money_manager_ap/Tabs/NavBarController.dart';
 import 'package:money_manager_ap/Tabs/TrasTab/DailyPage.dart';
 import 'package:provider/provider.dart';
 
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: DailyPage(),
+      home: NavBarController(),
     );
   }
 }

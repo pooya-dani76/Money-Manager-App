@@ -28,7 +28,10 @@ dependencies:
   path_provider: 
   provider:
   flutter_money_formatter:
-  auto_size_text:   
+  auto_size_text:
+  google_nav_bar: ^5.0.5
+  font_awesome_flutter:
+  
 
 
   # The following adds the Cupertino Icons font to your application.

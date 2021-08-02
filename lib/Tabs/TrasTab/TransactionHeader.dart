@@ -74,7 +74,6 @@ class _TransactionHeaderState extends State<TransactionHeader> {
                         child: Container(
                           padding: EdgeInsets.only(bottom: 10, top: 0),
                           child: AutoSizeText(
-                            // weekDayDeterminer(date.weekDay),
                             'Mon',
                             textScaleFactor: 1,
                             minFontSize: 1,
@@ -102,7 +101,7 @@ class _TransactionHeaderState extends State<TransactionHeader> {
                         'IRR ${income.output.nonSymbol}',
                         style: TextStyle(color: Colors.blue),
                         textScaleFactor: 1,
-                        minFontSize: 5,
+                        minFontSize: 10,
                         maxLines: 1,
                         maxFontSize: 15,
                       ),
