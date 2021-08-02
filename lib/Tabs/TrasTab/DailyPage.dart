@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:money_manager_ap/DataBase/Data.dart';
 import 'package:money_manager_ap/DataBase/SqliteFunction.dart';
 import 'package:money_manager_ap/DataBase/providerModel.dart';
+import 'package:money_manager_ap/Tabs/TrasTab/OneDayTransaction.dart';
 import 'package:provider/provider.dart';
 
 class DailyPage extends StatefulWidget {
@@ -11,61 +12,64 @@ class DailyPage extends StatefulWidget {
 
 class _DailyPageState extends State<DailyPage> {
   @override
+  void initState() {
+    var provider = Provider.of<TransactionProvider>(context, listen: false);
+    provider.loadInfo();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var provider = Provider.of<TransactionProvider>(context);
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _incrementCounter(provider),
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
-        body:Consumer<TransactionProvider>(builder: (context , transaction , child){
-          return ListView(
-            children: transaction.items,
-          );
-        },) );
+      appBar: AppBar(title: Text('Money Manager'),),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => _incrementCounter(provider),
+          tooltip: 'Increment',
+          child: Icon(Icons.add),
+        ),
+        body: Consumer<TransactionProvider>(
+          builder: (context, transactionProvider, child) {
+            return ListView.builder(
+              itemBuilder: (context, index) {
+                return OneDayTransaction(
+                  day: transactionProvider.transactionsAllDates[index].day,
+                  month: transactionProvider.transactionsAllDates[index].month,
+                  year: transactionProvider.transactionsAllDates[index].year,
+                  oneDayTransactions: transactionProvider.getOneDayTransactions(
+                      transactionProvider.transactionsAllDates[index].day,
+                      transactionProvider.transactionsAllDates[index].month,
+                      transactionProvider.transactionsAllDates[index].year),
+                );
+              },
+              itemCount: transactionProvider.transactionsAllDates.length,
+            );
+          },
+        ));
   }
 }
 
 void _incrementCounter(TransactionProvider provider) async {
-    int b;
-    // ignore: unused_local_variable
-    var c, a;
-
-    try {
-      final db = SqliteDB();
-      b = await db.countTable();
-    } catch (e) {
-      print('Error1: $e');
-    }
-
-    if (b == 0) {
-      try {
-        c = await createTable();
-      } catch (e) {
-        print('Error2: $e');
-      }
-    }
-
-    try {
-      a = await insertTranscation(Transaction(
+  var insertor;
+  checkTableExist();
+  try {
+    insertor = await insertTranscation(Transaction(
         transactionId: 1,
-        note: 'sik',
-        price: 8569,
-        destenationAccount: 'got',
-        extraNote: 'Goto sikim',
-        originAccount: 'sik',
-        year: 2020,
-        month: 9 ,
-        day: 20 ,
-        hour: 17 ,
+        note: 'for Transport',
+        price: 12000,
+        destenationAccount: 'Transportation',
+        extraNote: 'from home to work',
+        originAccount: 'Cash',
+        year: 2021,
+        month: 9,
+        day: 20,
+        hour: 17,
         minute: 30,
-        transactionType: 'income'
-      ));
-    } catch (e) {
-      print('Error3: $e');
-    }
-
-    print(a);
-    provider.loadInfo();
+        transactionType: 'Income'));
+  } catch (e) {
+    print('Error3: $e');
   }
+
+  print(insertor);
+  provider.loadInfo();
+}

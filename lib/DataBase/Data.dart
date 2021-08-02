@@ -23,7 +23,7 @@ class Transaction {
       this.month,
       this.year,
       this.hour,
-      this.minute, 
+      this.minute,
       this.transactionType});
 
   Map<String, dynamic> toMap() {
@@ -31,15 +31,23 @@ class Transaction {
       'id': transactionId,
       'note': note,
       'price': price,
-      'destenationAccount' : destenationAccount,
-      'extraNote' : extraNote,
-      'originAccount' : originAccount,
-      'day' : day,
-      'month' : month,
-      'year' : year,
-      'hour' : hour,
-      'minute' : minute,
-      'transactionType' : transactionType
+      'destenationAccount': destenationAccount,
+      'extraNote': extraNote,
+      'originAccount': originAccount,
+      'day': day,
+      'month': month,
+      'year': year,
+      'hour': hour,
+      'minute': minute,
+      'transactionType': transactionType
     };
   }
+}
+
+class Date {
+  int day;
+  int month;
+  int year;
+
+  Date(this.day, this.month, this.year);
 }

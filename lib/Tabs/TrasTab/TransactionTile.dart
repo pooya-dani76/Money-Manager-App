@@ -69,7 +69,7 @@ class _TransactionTileState extends State<TransactionTile> {
 // ignore: missing_return
 String subTitleDeterminer(Transaction tr) {
   switch (tr.transactionType) {
-    case 'income':
+    case 'Income':
       return tr.destenationAccount;
     case 'Expense':
       return tr.originAccount;
