@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:money_manager_ap/DataBase/Data.dart';
 import 'package:money_manager_ap/DataBase/providerModel.dart';
 import 'package:money_manager_ap/Tabs/TrasTab/GetDataPage/AppBar.dart';
@@ -17,9 +15,17 @@ class GetDataPage extends StatefulWidget {
 }
 
 class _GetDataPageState extends State<GetDataPage> {
-
   @override
   void initState() {
+    var provider = Provider.of<Controllers>(context, listen: false);
+    provider.setDate(DateTime(widget.transaction.year, widget.transaction.month,
+        widget.transaction.day));
+    provider.setTime(DateTime(
+        widget.transaction.year,
+        widget.transaction.month,
+        widget.transaction.day,
+        widget.transaction.hour,
+        widget.transaction.minute));
     super.initState();
   }
 
@@ -45,7 +51,8 @@ class _GetDataPageState extends State<GetDataPage> {
           ],
         ),
         Expanded(
-          child: Consumer2<ThemeSetter , Controllers>(builder: (context, themeSetter, controllers , child) {
+          child: Consumer2<ThemeSetter, Controllers>(
+              builder: (context, themeSetter, controllers, child) {
             return NotificationListener<OverscrollIndicatorNotification>(
               // ignore: missing_return
               onNotification: (overScroll) {
@@ -74,7 +81,8 @@ class _GetDataPageState extends State<GetDataPage> {
                                               BorderRadius.circular(20))),
                                   onTap: () {
                                     setState(() {
-                                      dateBottomSheet2(context , themeSetter ,controllers);
+                                      dateBottomSheet2(
+                                          context, themeSetter, controllers);
                                     });
                                   },
                                 ),
@@ -94,9 +102,10 @@ class _GetDataPageState extends State<GetDataPage> {
                                       border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(20))),
-                                              onTap: (){
-                                                timeBottomSheet(context , themeSetter ,controllers);
-                                              },
+                                  onTap: () {
+                                    timeBottomSheet(
+                                        context, themeSetter, controllers);
+                                  },
                                 ),
                               ),
                             ),

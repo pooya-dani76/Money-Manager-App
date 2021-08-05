@@ -17,12 +17,10 @@ class NavBarController extends StatefulWidget {
 
 class _NavBarControllerState extends State<NavBarController> {
   int index;
-  DateTime now;
   @override
   void initState() {
     index = 0;
     super.initState();
-    now = DateTime.now();
   }
 
   @override
@@ -35,11 +33,11 @@ class _NavBarControllerState extends State<NavBarController> {
               MaterialPageRoute(
                   builder: (context) => GetDataPage(
                         transaction: Transaction(
-                            day: now.day,
-                            month: now.month,
-                            year: now.year,
-                            hour: now.hour,
-                            minute: now.minute),
+                            day: DateTime.now().day,
+                            month: DateTime.now().month,
+                            year: DateTime.now().year,
+                            hour: DateTime.now().hour,
+                            minute: DateTime.now().minute),
                       )));
         },
         // ()=>incrementCounter(provider),
