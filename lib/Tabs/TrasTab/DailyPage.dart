@@ -21,8 +21,8 @@ class _DailyPageState extends State<DailyPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<TransactionProvider>(
-      builder: (context, transactionProvider, child) {
+    return Consumer2<TransactionProvider , ThemeSetter>(
+      builder: (context, transactionProvider , themeSetter , child) {
         return Column(
           children: [
             SolidAppBar(
@@ -31,8 +31,9 @@ class _DailyPageState extends State<DailyPage> {
                 textScaleFactor: 1,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              // backgroundColor: Colors.blue,
-              // actions: [Container()],
+              actions: [
+                IconButton(icon: Icon(FontAwesomeIcons.moon), onPressed: ()=>themeSetter.toggleTheme(),)
+              ],
             ),
             Expanded(
               child: NotificationListener<OverscrollIndicatorNotification>(

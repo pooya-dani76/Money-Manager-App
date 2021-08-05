@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:money_manager_ap/DataBase/providerModel.dart';
 import 'package:money_manager_ap/DataBase/SqliteFunction.dart';
 import 'package:money_manager_ap/Tabs/NavBarController.dart';
-import 'package:money_manager_ap/Tabs/TrasTab/DailyPage.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -26,6 +25,9 @@ void main() async {
       ChangeNotifierProvider(
         create: (context) => TransactionProvider(),
       ),
+      ChangeNotifierProvider(
+        create: (context) => Controllers(),
+      ),
     ],
     child: MyApp(),
   ));
@@ -34,13 +36,18 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: NavBarController(),
-    );
+    return ChangeNotifierProvider(
+        create: (BuildContext context) => ThemeSetter(),
+        child: Consumer<ThemeSetter>(builder: (context, themeSetter, child) {
+          themeSetter.loadTheme();
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            theme: ThemeData.light(),
+            darkTheme: ThemeData.dark(),
+            themeMode: themeSetter.darkMode == true ? ThemeMode.dark : ThemeMode.light,
+            home: NavBarController(),
+          );
+        }));
   }
 }

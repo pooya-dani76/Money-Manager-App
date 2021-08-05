@@ -8,8 +8,8 @@ class Transaction {
   String originAccount;
   String destenationAccount;
   String note;
-  String extraNote;
-  int price;
+  String description;
+  double price;
   String transactionType;
 
   Transaction(
@@ -17,7 +17,7 @@ class Transaction {
       this.note,
       this.price,
       this.destenationAccount,
-      this.extraNote,
+      this.description,
       this.originAccount,
       this.day,
       this.month,
@@ -32,7 +32,7 @@ class Transaction {
       'note': note,
       'price': price,
       'destenationAccount': destenationAccount,
-      'extraNote': extraNote,
+      'description': description,
       'originAccount': originAccount,
       'day': day,
       'month': month,

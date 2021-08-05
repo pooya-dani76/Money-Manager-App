@@ -2,17 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:money_manager_ap/DataBase/Data.dart';
 import 'package:money_manager_ap/DataBase/SqliteFunction.dart';
 import 'package:flutter/material.dart';
-import 'package:money_manager_ap/Tabs/TrasTab/TransactionTile.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TransactionProvider extends ChangeNotifier {
   int transactionId = 1;
   List<Transaction> transcations = [];
   List<DateTime> transactionsAllDates = [];
-  List<Widget> get items => transcations
-      .map((element) => TransactionTile(
-            transaction: element,
-          ))
-      .toList();
+  // List<Widget> get items => transcations
+  //     .map((element) => TransactionTile(
+  //           transaction: element,
+  //         ))
+  //     .toList();
 
   void refresh() {
     notifyListeners();
@@ -37,7 +38,7 @@ class TransactionProvider extends ChangeNotifier {
           note: res[i]['note'],
           price: res[i]['price'],
           destenationAccount: res[i]['destenationAccount'],
-          extraNote: res[i]['extraNote'],
+          description: res[i]['description'],
           originAccount: res[i]['originAccount'],
           day: res[i]['day'],
           month: res[i]['month'],
@@ -106,4 +107,43 @@ class TransactionProvider extends ChangeNotifier {
     });
     return totalExpense;
   }
+}
+
+
+class ThemeSetter extends ChangeNotifier{
+  bool darkMode;
+
+  void toggleTheme() async {
+    final themeSaver = await SharedPreferences.getInstance();
+    darkMode = !darkMode;
+    themeSaver.setBool('ThemeData', darkMode);
+    notifyListeners();
+  }
+
+  void loadTheme()async{
+    final themeLoader = await SharedPreferences.getInstance();
+    darkMode = themeLoader.getBool('ThemeData') ?? false;
+    notifyListeners();
+  }
+}
+
+class Controllers extends ChangeNotifier{
+  TextEditingController dateController = TextEditingController();
+  TextEditingController timeController = TextEditingController();
+  TextEditingController accountController = TextEditingController();
+  TextEditingController destenationAccountController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+  TextEditingController noteController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+
+  void setDate(DateTime date){
+    dateController.text ='${date.year}/${date.month}/${date.day}';
+    notifyListeners();
+  }
+
+  void setTime(DateTime time){
+    timeController.text ='${time.hour}:${time.minute}';
+    notifyListeners();
+  }
+
 }

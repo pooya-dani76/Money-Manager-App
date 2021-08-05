@@ -4,9 +4,9 @@ import 'package:money_manager_ap/DataBase/SqliteFunction.dart';
 import 'package:money_manager_ap/DataBase/providerModel.dart';
 import 'package:money_manager_ap/Tabs/TrasTab/DailyPage.dart';
 import 'package:money_manager_ap/Tabs/TrasTab/GetDataPage/GetDataPage.dart';
-import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:provider/provider.dart';
 
 class NavBarController extends StatefulWidget {
   const NavBarController({Key key}) : super(key: key);
@@ -17,24 +17,32 @@ class NavBarController extends StatefulWidget {
 
 class _NavBarControllerState extends State<NavBarController> {
   int index;
+  DateTime now;
   @override
   void initState() {
     index = 0;
     super.initState();
+    now = DateTime.now();
   }
+
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<TransactionProvider>(context);
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Money Manager'),
-      // ),
       floatingActionButton: FloatingActionButton(
-        onPressed:
-        (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>GetDataPage()));
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => GetDataPage(
+                        transaction: Transaction(
+                            day: now.day,
+                            month: now.month,
+                            year: now.year,
+                            hour: now.hour,
+                            minute: now.minute),
+                      )));
         },
-        //  () => _incrementCounter(provider),
+        // ()=>incrementCounter(provider),
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
@@ -42,7 +50,7 @@ class _NavBarControllerState extends State<NavBarController> {
         height: 55,
         child: GNav(
           activeColor: Colors.blue,
-          onTabChange: (i){
+          onTabChange: (i) {
             setState(() {
               index = i;
             });
@@ -75,6 +83,7 @@ class _NavBarControllerState extends State<NavBarController> {
   }
 }
 
+// ignore: missing_return
 Widget navBarBody(int index) {
   switch (index) {
     case 0:
@@ -88,7 +97,7 @@ Widget navBarBody(int index) {
   }
 }
 
-void _incrementCounter(TransactionProvider provider) async {
+void incrementCounter(TransactionProvider provider) async {
   var insertor;
   checkTableExist();
   try {
@@ -97,7 +106,7 @@ void _incrementCounter(TransactionProvider provider) async {
         note: 'for Transport from home to work',
         price: 85692100,
         destenationAccount: 'Transportation',
-        extraNote: 'from home to work',
+        description: 'from home to work',
         originAccount: 'Cash',
         year: 2021,
         month: 9,

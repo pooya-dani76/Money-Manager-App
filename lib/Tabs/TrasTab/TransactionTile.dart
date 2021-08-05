@@ -2,8 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:money_manager_ap/DataBase/Data.dart';
-import 'package:money_manager_ap/DataBase/providerModel.dart';
-import 'package:provider/provider.dart';
 
 class TransactionTile extends StatefulWidget {
   final Transaction transaction;
@@ -99,6 +97,7 @@ String subTitleDeterminer(Transaction tr) {
   }
 }
 
+// ignore: missing_return
 Color priceColor(Transaction transaction) {
   switch (transaction.transactionType) {
     case 'Expense':

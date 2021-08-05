@@ -3,9 +3,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SolidAppBar extends StatefulWidget {
   final Widget title;
+  final bool isMain;
   final List<Widget> actions;
   final Color backgroundColor;
-  const SolidAppBar({Key key, this.title, this.actions, this.backgroundColor})
+  const SolidAppBar({Key key, this.title, this.actions, this.backgroundColor, this.isMain})
       : super(key: key);
 
   @override
@@ -31,7 +32,7 @@ class _SolidAppBarState extends State<SolidAppBar> {
               children: [
                 Expanded(
                   flex: 1,
-                  child: Container(
+                  child: widget.isMain == false ? Container(
                     child: IconButton(
                       icon: Icon(FontAwesomeIcons.chevronLeft),
                       iconSize: 18,
@@ -39,7 +40,7 @@ class _SolidAppBarState extends State<SolidAppBar> {
                         Navigator.pop(context);
                       },
                     ),
-                  ),
+                  ) : Container(),
                 ),
                 Expanded(
                   flex: 5,

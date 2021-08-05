@@ -46,7 +46,7 @@ Future createTable() async {
     note TEXT,
     price INTEGER,
     destenationAccount TEXT,
-    extraNote TEXT,
+    description TEXT,
     originAccount TEXT,
     day INTEGER,
     month INTEGER,
