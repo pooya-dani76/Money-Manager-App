@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:money_manager_ap/DataBase/Data.dart';
+import 'package:money_manager_ap/Deteminers.dart';
 
 class TransactionTile extends StatefulWidget {
   final Transaction transaction;
@@ -74,7 +75,7 @@ class _TransactionTileState extends State<TransactionTile> {
                   alignment: Alignment.centerRight,
                 child: AutoSizeText('IRR ${price.output.nonSymbol}',
                     textScaleFactor: 1,
-                    style: TextStyle(color: priceColor(widget.transaction)),
+                    style: TextStyle(color: colors['${widget.transaction.transactionType}']),
                     minFontSize: 5,
                     maxLines: 1,
                     maxFontSize: 15),
@@ -82,31 +83,5 @@ class _TransactionTileState extends State<TransactionTile> {
         ],
       ),
     );
-  }
-}
-
-// ignore: missing_return
-String subTitleDeterminer(Transaction tr) {
-  switch (tr.transactionType) {
-    case 'Income':
-      return tr.destenationAccount;
-    case 'Expense':
-      return tr.originAccount;
-    case 'Total':
-      return '${tr.originAccount} -> ${tr.destenationAccount}';
-  }
-}
-
-// ignore: missing_return
-Color priceColor(Transaction transaction) {
-  switch (transaction.transactionType) {
-    case 'Expense':
-      return Colors.red;
-
-    case 'Income':
-      return Colors.blue;
-
-    case 'Transfer':
-      return null;
   }
 }

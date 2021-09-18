@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:money_manager_ap/DataBase/Data.dart';
 import 'package:money_manager_ap/DataBase/SqliteFunction.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TransactionProvider extends ChangeNotifier {
@@ -20,16 +19,13 @@ class TransactionProvider extends ChangeNotifier {
   }
 
   void loadInfo() async {
-    print('load info!');
     transcations.clear();
-    print('cleared');
     var res;
     try {
       res = await readSQL();
     } catch (e) {
       print('error: $e');
     }
-    print('Readed SQL');
     var rowCount = await getNumberOfRows();
     print(rowCount[0]['COUNT(*)']);
     for (int i = 0; i < rowCount[0]['COUNT(*)']; i++) {
@@ -48,7 +44,6 @@ class TransactionProvider extends ChangeNotifier {
           transactionType: res[i]['transactionType']);
       transcations.add(transaction);
     }
-    print('added all');
     getAllDates();
     notifyListeners();
   }
@@ -77,7 +72,9 @@ class TransactionProvider extends ChangeNotifier {
       flag = false;
       DateTime temp = DateTime(element.year, element.month, element.day);
       transactionsAllDates.forEach((element) {
-        if (temp.day == element.day && temp.month == element.month && temp.year == element.year) {
+        if (temp.day == element.day &&
+            temp.month == element.month &&
+            temp.year == element.year) {
           flag = true;
         }
       });
@@ -85,7 +82,7 @@ class TransactionProvider extends ChangeNotifier {
         transactionsAllDates.add(temp);
       }
     });
-    transactionsAllDates.sort((b,a) => a.compareTo(b));
+    transactionsAllDates.sort((b, a) => a.compareTo(b));
   }
 
   double getOneDayIncome(List<Transaction> oneDaytranscations) {
@@ -109,8 +106,7 @@ class TransactionProvider extends ChangeNotifier {
   }
 }
 
-
-class ThemeSetter extends ChangeNotifier{
+class ThemeSetter extends ChangeNotifier {
   bool darkMode;
 
   void toggleTheme() async {
@@ -120,14 +116,14 @@ class ThemeSetter extends ChangeNotifier{
     notifyListeners();
   }
 
-  void loadTheme()async{
+  void loadTheme() async {
     final themeLoader = await SharedPreferences.getInstance();
     darkMode = themeLoader.getBool('ThemeData') ?? false;
     notifyListeners();
   }
 }
 
-class Controllers extends ChangeNotifier{
+class Controllers extends ChangeNotifier {
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
   TextEditingController accountController = TextEditingController();
@@ -136,14 +132,30 @@ class Controllers extends ChangeNotifier{
   TextEditingController noteController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
-  void setDate(DateTime date){
-    dateController.text ='${date.year}/${date.month}/${date.day}';
-    notifyListeners();
+  void setDate(DateTime date) {
+    dateController.text = '${date.year}-${date.month}-${date.day}';
+    // notifyListeners();
   }
 
-  void setTime(DateTime time){
-    timeController.text ='${time.hour}:${time.minute}';
-    notifyListeners();
+  void setTime(DateTime time) {
+    timeController.text = '${time.hour}:${time.minute}';
+    // notifyListeners();
   }
 
+  DateTime extractDateTime() {
+    var dateElements = dateController.text.split("-");
+    var timeElements = timeController.text.split(":");
+    DateTime tempDate;
+    try {
+      tempDate = DateTime(
+          int.parse(dateElements[0]),
+          int.parse(dateElements[1]),
+          int.parse(dateElements[2]),
+          int.parse(timeElements[0]),
+          int.parse(timeElements[1]));
+    } catch (e) {
+      print(e);
+    }
+    return tempDate;
+  }
 }

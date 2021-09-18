@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager_ap/DataBase/Data.dart';
-import 'package:money_manager_ap/DataBase/providerModel.dart';
+import 'package:money_manager_ap/DataBase/Providers.dart';
 import 'package:money_manager_ap/Tabs/Controllers.dart';
 import 'package:money_manager_ap/Tabs/TrasTab/TransactionTile.dart';
 import 'package:provider/provider.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:money_manager_ap/DataBase/Data.dart';
-import 'package:money_manager_ap/DataBase/providerModel.dart';
+import 'package:money_manager_ap/DataBase/Providers.dart';
 import 'package:money_manager_ap/Tabs/TrasTab/GetDataPage/AppBar.dart';
 import 'package:money_manager_ap/Tabs/TrasTab/GetDataPage/BottomSheets.dart';
 import 'package:provider/provider.dart';
@@ -81,7 +81,7 @@ class _GetDataPageState extends State<GetDataPage> {
                                               BorderRadius.circular(20))),
                                   onTap: () {
                                     setState(() {
-                                      dateBottomSheet2(
+                                      dateBottomSheet(
                                           context, themeSetter, controllers);
                                     });
                                   },

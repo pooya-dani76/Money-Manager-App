@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-Widget indicator(String type, double price) {
+import '../../Deteminers.dart';
+
+Widget indicator(String transactionType, double price) {
   return Container(
     child: Column(
       children: [
@@ -9,7 +11,7 @@ Widget indicator(String type, double price) {
           child: Container(
             alignment: Alignment.center,
             child: Text(
-              '$type',
+              '$transactionType',
               textScaleFactor: 1,
             ),
           ),
@@ -21,7 +23,7 @@ Widget indicator(String type, double price) {
             child: Text(
               '$price',
               textScaleFactor: 1,
-              style: TextStyle(color: colorDeterminer(type)),
+              style: TextStyle(color: colors['$transactionType']),
             ),
           ),
         ),
@@ -30,14 +32,3 @@ Widget indicator(String type, double price) {
   );
 }
 
-// ignore: missing_return
-Color colorDeterminer(String type) {
-  switch (type) {
-    case 'income':
-      return Colors.blue;
-    case 'Expense':
-      return Colors.red;
-    case 'Total':
-      return null;
-  }
-}

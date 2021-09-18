@@ -41,10 +41,10 @@ class SqliteDB {
 Future createTable() async {
   var dbClient = await SqliteDB().db;
   var res = await dbClient.execute(""" 
-  CREATE TABLE TransactionsBase(
+  CREATE TABLE IF NOT EXISTS TransactionsBase(
     id INTEGER,
     note TEXT,
-    price INTEGER,
+    price REAL,
     destenationAccount TEXT,
     description TEXT,
     originAccount TEXT,

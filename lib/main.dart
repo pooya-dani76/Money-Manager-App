@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_manager_ap/DataBase/providerModel.dart';
+import 'package:money_manager_ap/DataBase/Providers.dart';
 import 'package:money_manager_ap/DataBase/SqliteFunction.dart';
 import 'package:money_manager_ap/Tabs/NavBarController.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +14,8 @@ void main() async {
   /// Initialize sq-lite
   try {
     final dtb = SqliteDB();
-    checkTableExist();
+    createTable();
+    // checkTableExist();
     await dtb.countTable();
   } catch (e) {
     print('ErrorS1: $e');

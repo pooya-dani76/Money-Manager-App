@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager_ap/DataBase/Data.dart';
 import 'package:money_manager_ap/DataBase/SqliteFunction.dart';
-import 'package:money_manager_ap/DataBase/providerModel.dart';
-import 'package:money_manager_ap/Tabs/TrasTab/DailyPage.dart';
+import 'package:money_manager_ap/DataBase/Providers.dart';
+import 'package:money_manager_ap/Deteminers.dart';
 import 'package:money_manager_ap/Tabs/TrasTab/GetDataPage/GetDataPage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:provider/provider.dart';
 
 class NavBarController extends StatefulWidget {
   const NavBarController({Key key}) : super(key: key);
@@ -76,22 +75,8 @@ class _NavBarControllerState extends State<NavBarController> {
           ],
         ),
       ),
-      body: navBarBody(index),
+      body: transTabPages[index],
     );
-  }
-}
-
-// ignore: missing_return
-Widget navBarBody(int index) {
-  switch (index) {
-    case 0:
-      return DailyPage();
-    case 1:
-      return Container();
-    case 2:
-      return Container();
-    case 3:
-      return Container();
   }
 }
 
@@ -102,13 +87,13 @@ void incrementCounter(TransactionProvider provider) async {
     insertor = await insertTranscation(Transaction(
         transactionId: 1,
         note: 'for Transport from home to work',
-        price: 85692100,
+        price: 8569000,
         destenationAccount: 'Transportation',
         description: 'from home to work',
         originAccount: 'Cash',
         year: 2021,
         month: 9,
-        day: 22,
+        day: 23,
         hour: 17,
         minute: 30,
         transactionType: 'Expense'));

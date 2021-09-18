@@ -1,7 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
-import 'package:money_manager_ap/DataBase/providerModel.dart';
+import 'package:money_manager_ap/DataBase/Providers.dart';
+import 'package:money_manager_ap/Deteminers.dart';
 import 'package:provider/provider.dart';
 
 class TransactionHeader extends StatefulWidget {
@@ -28,11 +29,6 @@ class _TransactionHeaderState extends State<TransactionHeader> {
         amount: provider.getOneDayIncome(provider.getOneDayTransactions(
             widget.day, widget.month, widget.year)));
     return Container(
-      // shape: RoundedRectangleBorder(
-      //     borderRadius: BorderRadius.only(
-      //         topLeft: Radius.circular(widget.radius),
-      //         topRight: Radius.circular(widget.radius))),
-      // elevation: 10,
       margin: EdgeInsets.only(top: 0, bottom: 0),
       child: Container(
         height: 50,
@@ -61,7 +57,7 @@ class _TransactionHeaderState extends State<TransactionHeader> {
                         child: Container(
                           padding: EdgeInsets.only(bottom: 0, top: 10),
                           child: AutoSizeText(
-                            '${widget.month}.${widget.year}',
+                            '${monthes[widget.month]} ${widget.year}',
                             textScaleFactor: 1,
                             minFontSize: 1,
                             maxLines: 1,
@@ -88,7 +84,6 @@ class _TransactionHeaderState extends State<TransactionHeader> {
               ),
             ),
             Container(
-              //  padding: EdgeInsets.only(right: 20, left: 10),
               width: MediaQuery.of(context).size.width / 1.8,
               child: Row(
                 children: [

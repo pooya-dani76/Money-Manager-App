@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:money_manager_ap/DataBase/providerModel.dart';
+import 'package:money_manager_ap/DataBase/Providers.dart';
 import 'package:money_manager_ap/Tabs/Controllers.dart';
 import 'package:money_manager_ap/Tabs/TrasTab/GetDataPage/AppBar.dart';
 import 'package:money_manager_ap/Tabs/TrasTab/OneDayTransaction.dart';
