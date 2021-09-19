@@ -42,3 +42,9 @@ String subTitleDeterminer(Transaction tr) {
   }
 }
 
+Map<String , TextInputType> inputType = {
+  'number' : TextInputType.number,
+  'text' : TextInputType.text,
+  'None':TextInputType.none,
+  'MultiLine':TextInputType.multiline
+};

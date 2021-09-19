@@ -134,12 +134,10 @@ class Controllers extends ChangeNotifier {
 
   void setDate(DateTime date) {
     dateController.text = '${date.year}-${date.month}-${date.day}';
-    // notifyListeners();
   }
 
   void setTime(DateTime time) {
     timeController.text = '${time.hour}:${time.minute}';
-    // notifyListeners();
   }
 
   DateTime extractDateTime() {

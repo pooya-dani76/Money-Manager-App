@@ -5,6 +5,7 @@ import 'package:money_manager_ap/DataBase/Data.dart';
 import 'package:money_manager_ap/DataBase/Providers.dart';
 import 'package:money_manager_ap/Tabs/TrasTab/GetDataPage/AppBar.dart';
 import 'package:money_manager_ap/Tabs/TrasTab/GetDataPage/BottomSheets.dart';
+import 'package:money_manager_ap/Tabs/TrasTab/GetDataPage/FormField.dart';
 import 'package:provider/provider.dart';
 
 class GetDataPage extends StatefulWidget {
@@ -46,7 +47,9 @@ class _GetDataPageState extends State<GetDataPage> {
                 child: IconButton(
               iconSize: 18,
               icon: Icon(FontAwesomeIcons.bookmark),
-              onPressed: () {},
+              onPressed: () {
+                // List a = [for (int i = 0; i < 10; i++) i]; // List Comprehension
+              },
             )),
           ],
         ),
@@ -112,65 +115,40 @@ class _GetDataPageState extends State<GetDataPage> {
                           )
                         ],
                       )),
-                  Container(
-                    padding: EdgeInsets.only(top: 25, right: 20, left: 20),
-                    child: Form(
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            labelText: 'From',
-                            prefixIcon: Icon(FontAwesomeIcons.wallet),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20))),
-                      ),
-                    ),
+                  GetFormField(
+                    prefixIcon: Icon(FontAwesomeIcons.wallet),
+                    lebelText: 'From',
+                    keyboardType: 'text',
+                    controller: controllers.accountController,
+                    expands: false,
                   ),
-                  Container(
-                    padding: EdgeInsets.only(top: 25, right: 20, left: 20),
-                    child: Form(
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            labelText: 'To',
-                            prefixIcon: Icon(FontAwesomeIcons.moneyBillAlt),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20))),
-                      ),
-                    ),
+                  GetFormField(
+                    prefixIcon: Icon(FontAwesomeIcons.moneyBillAlt),
+                    lebelText: 'To',
+                    keyboardType: 'text',
+                    controller: controllers.destenationAccountController,
+                    expands: false,
                   ),
-                  Container(
-                    padding: EdgeInsets.only(top: 25, right: 20, left: 20),
-                    child: Form(
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            labelText: 'Amount',
-                            prefixIcon: Icon(FontAwesomeIcons.dollarSign),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20))),
-                      ),
-                    ),
+                  GetFormField(
+                    prefixIcon: Icon(FontAwesomeIcons.dollarSign),
+                    lebelText: 'Amount',
+                    keyboardType: 'number',
+                    controller: controllers.amountController,
+                    expands: false,
                   ),
-                  Container(
-                    padding: EdgeInsets.only(top: 25, right: 20, left: 20),
-                    child: Form(
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            labelText: 'Note',
-                            prefixIcon: Icon(FontAwesomeIcons.stickyNote),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20))),
-                      ),
-                    ),
+                  GetFormField(
+                    prefixIcon: Icon(FontAwesomeIcons.stickyNote),
+                    lebelText: 'Note',
+                    keyboardType: 'text',
+                    controller: controllers.noteController,
+                    expands: false,
                   ),
-                  Container(
-                    padding: EdgeInsets.only(top: 25, right: 20, left: 20),
-                    child: Form(
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            labelText: 'Description',
-                            prefixIcon: Icon(CupertinoIcons.book),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20))),
-                      ),
-                    ),
+                  GetFormField(
+                    prefixIcon: Icon(CupertinoIcons.book),
+                    lebelText: 'Description',
+                    keyboardType: 'MultiLine',
+                    controller: controllers.descriptionController,
+                    expands: true,
                   ),
                 ],
               ),
