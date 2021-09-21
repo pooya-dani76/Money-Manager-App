@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:money_manager_ap/DataBase/Data.dart';
 import 'package:money_manager_ap/DataBase/Providers.dart';
+import 'package:money_manager_ap/Deteminers.dart';
 import 'package:money_manager_ap/Tabs/TrasTab/GetDataPage/AppBar.dart';
 import 'package:money_manager_ap/Tabs/TrasTab/GetDataPage/BottomSheets.dart';
 import 'package:money_manager_ap/Tabs/TrasTab/GetDataPage/FormField.dart';
+import 'package:money_manager_ap/Tabs/TrasTab/GetDataPage/ImageBox/GetImageBox.dart';
+import 'package:money_manager_ap/Tabs/TrasTab/GetDataPage/SaveButton.dart';
 import 'package:provider/provider.dart';
 
 class GetDataPage extends StatefulWidget {
@@ -27,6 +30,7 @@ class _GetDataPageState extends State<GetDataPage> {
         widget.transaction.day,
         widget.transaction.hour,
         widget.transaction.minute));
+    provider.choosenValueForDropDown = 'Expense';    
     super.initState();
   }
 
@@ -37,10 +41,19 @@ class _GetDataPageState extends State<GetDataPage> {
       children: [
         SolidAppBar(
           isMain: false,
-          title: Text(
-            'Income',
-            textScaleFactor: 1,
-            style: TextStyle(fontWeight: FontWeight.bold),
+          title: Consumer<Controllers>(
+            builder: (BuildContext context, controllers, Widget child)=> DropdownButton(
+              onChanged: (value){
+                controllers.setDropDownValue(value);
+              },
+              underline: Container(width: 0, height: 0,),
+              value: controllers.choosenValueForDropDown,
+              items: <String>['Income', 'Transfer', 'Expense']
+                  .map((String value) {
+                    return DropdownMenuItem(child: Text(value , textScaleFactor: 1,),value: value,);
+                  })
+                  .toList(),
+            ),
           ),
           actions: [
             Container(
@@ -117,14 +130,14 @@ class _GetDataPageState extends State<GetDataPage> {
                       )),
                   GetFormField(
                     prefixIcon: Icon(FontAwesomeIcons.wallet),
-                    lebelText: 'From',
+                    lebelText: getDataFormTitle[controllers.choosenValueForDropDown][0],
                     keyboardType: 'text',
                     controller: controllers.accountController,
                     expands: false,
                   ),
                   GetFormField(
                     prefixIcon: Icon(FontAwesomeIcons.moneyBillAlt),
-                    lebelText: 'To',
+                    lebelText: getDataFormTitle[controllers.choosenValueForDropDown][1],
                     keyboardType: 'text',
                     controller: controllers.destenationAccountController,
                     expands: false,
@@ -139,9 +152,9 @@ class _GetDataPageState extends State<GetDataPage> {
                   GetFormField(
                     prefixIcon: Icon(FontAwesomeIcons.stickyNote),
                     lebelText: 'Note',
-                    keyboardType: 'text',
+                    keyboardType: 'MultiLine',
                     controller: controllers.noteController,
-                    expands: false,
+                    expands: true,
                   ),
                   GetFormField(
                     prefixIcon: Icon(CupertinoIcons.book),
@@ -150,6 +163,8 @@ class _GetDataPageState extends State<GetDataPage> {
                     controller: controllers.descriptionController,
                     expands: true,
                   ),
+                  GetImageBox(),
+                  SaveButton(),
                 ],
               ),
             );

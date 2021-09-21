@@ -42,9 +42,15 @@ String subTitleDeterminer(Transaction tr) {
   }
 }
 
-Map<String , TextInputType> inputType = {
-  'number' : TextInputType.number,
-  'text' : TextInputType.text,
-  'None':TextInputType.none,
-  'MultiLine':TextInputType.multiline
+Map<String, TextInputType> inputType = {
+  'number': TextInputType.number,
+  'text': TextInputType.text,
+  'None': TextInputType.none,
+  'MultiLine': TextInputType.multiline
+};
+
+Map<String, List<String>> getDataFormTitle = {
+  'Income': ['To', 'For'],
+  'Expense': ['From', 'For'],
+  'Transfer': ['From', 'To']
 };

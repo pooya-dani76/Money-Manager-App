@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:money_manager_ap/DataBase/Data.dart';
 import 'package:money_manager_ap/DataBase/SqliteFunction.dart';
 import 'package:flutter/material.dart';
@@ -131,6 +133,9 @@ class Controllers extends ChangeNotifier {
   TextEditingController amountController = TextEditingController();
   TextEditingController noteController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  String choosenValueForDropDown;
+  var picker = ImagePicker();
+  List<File> images = [];
 
   void setDate(DateTime date) {
     dateController.text = '${date.year}-${date.month}-${date.day}';
@@ -155,5 +160,25 @@ class Controllers extends ChangeNotifier {
       print(e);
     }
     return tempDate;
+  }
+
+  void addImage(File image){
+    images.add(image);
+    notifyListeners();
+  }
+
+  void removeImage(File image){
+    images.remove(image);
+    notifyListeners();
+  }
+
+  void removeImageIndex(int index){
+    images.removeAt(index);
+    notifyListeners();
+  }
+
+  void setDropDownValue(String value){
+    choosenValueForDropDown = value;
+    notifyListeners();
   }
 }
