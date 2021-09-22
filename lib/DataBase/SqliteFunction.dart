@@ -42,18 +42,18 @@ Future createTable() async {
   var dbClient = await SqliteDB().db;
   var res = await dbClient.execute(""" 
   CREATE TABLE IF NOT EXISTS TransactionsBase(
-    id INTEGER,
-    note TEXT,
-    price REAL,
-    destenationAccount TEXT,
-    description TEXT,
-    originAccount TEXT,
+    id INTEGER PRIMARY KEY,
+    transactionType TEXT,
     day INTEGER,
     month INTEGER,
     year INTEGER,
     hour INTEGER,
     minute INTEGER,
-    transactionType TEXT)""");
+    originAccount TEXT,
+    destenationAccount TEXT,
+    price REAL,
+    note TEXT,
+    description TEXT)""");
   return res;
 }
 
@@ -80,8 +80,6 @@ Future checkTableExist()async{
 Future insertTranscation(data.Transaction transaction) async {
   dynamic temp = transaction.toMap();
   print(temp);
-  // var a = DateTime.parse('2020-09-20 23:56');
-  // print('a = $a');
   final dbClient = await SqliteDB().db;
   final res = await dbClient.insert("TransactionsBase", temp);
   return res;

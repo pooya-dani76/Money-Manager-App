@@ -4,17 +4,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:money_manager_ap/DataBase/Data.dart';
 import 'package:money_manager_ap/DataBase/SqliteFunction.dart';
 import 'package:flutter/material.dart';
+import 'package:money_manager_ap/Deteminers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TransactionProvider extends ChangeNotifier {
   int transactionId = 1;
   List<Transaction> transcations = [];
   List<DateTime> transactionsAllDates = [];
-  // List<Widget> get items => transcations
-  //     .map((element) => TransactionTile(
-  //           transaction: element,
-  //         ))
-  //     .toList();
 
   void refresh() {
     notifyListeners();
@@ -128,21 +124,60 @@ class ThemeSetter extends ChangeNotifier {
 class Controllers extends ChangeNotifier {
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
-  TextEditingController accountController = TextEditingController();
+  TextEditingController originAccountController = TextEditingController();
   TextEditingController destenationAccountController = TextEditingController();
   TextEditingController amountController = TextEditingController();
   TextEditingController noteController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  GlobalKey<FormState> originAccountKey = GlobalKey<FormState>();
+  GlobalKey<FormState> destenationAccountKey = GlobalKey<FormState>();
+  GlobalKey<FormState> amountKey = GlobalKey<FormState>();
   String choosenValueForDropDown;
   var picker = ImagePicker();
   List<File> images = [];
+
+  void setInitialValues(Transaction transaction) {
+    setDate(DateTime(transaction.year, transaction.month, transaction.day,
+        transaction.hour, transaction.minute));
+    setTime(DateTime(transaction.year, transaction.month, transaction.day,
+        transaction.hour, transaction.minute));
+    originAccountController.text = transaction.originAccount != null
+        ? transaction.originAccount
+        : defaultValues['OriginAccount'];
+
+    destenationAccountController.text = transaction.originAccount != null
+        ? transaction.destenationAccount
+        : defaultValues['DestentaionAccount'];
+
+    amountController.text = transaction.price != null
+        ? transaction.price.toString()
+        : defaultValues['Amount'];
+
+    noteController.text =
+        transaction.note != null ? transaction.note : defaultValues['Note'];
+
+    descriptionController.text = transaction.description != null
+        ? transaction.description
+        : defaultValues['Description'];
+    choosenValueForDropDown = transaction.transactionType != null
+        ? transaction.transactionType
+        : defaultValues['DropDown'];
+  }
+
+  void disposeAllControllers() {
+    originAccountController.clear();
+    destenationAccountController.clear();
+    amountController.clear();
+    noteController.clear();
+    descriptionController.clear();
+  }
 
   void setDate(DateTime date) {
     dateController.text = '${date.year}-${date.month}-${date.day}';
   }
 
-  void setTime(DateTime time) {
-    timeController.text = '${time.hour}:${time.minute}';
+  void setTime(DateTime date) {
+    timeController.text = '${date.hour}:${date.minute}';
   }
 
   DateTime extractDateTime() {
@@ -162,23 +197,47 @@ class Controllers extends ChangeNotifier {
     return tempDate;
   }
 
-  void addImage(File image){
+  void addImage(File image) {
     images.add(image);
     notifyListeners();
   }
 
-  void removeImage(File image){
-    images.remove(image);
-    notifyListeners();
-  }
-
-  void removeImageIndex(int index){
+  void removeImageIndex(int index) {
     images.removeAt(index);
     notifyListeners();
   }
 
-  void setDropDownValue(String value){
+  void setDropDownValue(String value) {
     choosenValueForDropDown = value;
     notifyListeners();
+  }
+
+  bool validateFields() {
+    if (originAccountKey.currentState.validate() &&
+        destenationAccountKey.currentState.validate() &&
+        amountKey.currentState.validate()) return true;
+    return false;
+  }
+
+  void addCurrentTransactionToDataBase() {
+    List<String> dateParameters = dateController.text.split('-');
+    List<String> timeParameters = timeController.text.split(':');
+    try {
+      insertTranscation(Transaction(
+        transactionType: choosenValueForDropDown,
+        day: int.parse(dateParameters[2]),
+        month: int.parse(dateParameters[1]),
+        year: int.parse(dateParameters[0]),
+        hour: int.parse(timeParameters[0]),
+        minute: int.parse(timeParameters[1]),
+        originAccount: originAccountController.text,
+        destenationAccount: destenationAccountController.text,
+        price: double.parse(amountController.text),
+        note: noteController.text,
+        description: descriptionController.text,
+      ));
+    } catch (e) {
+      print(e);
+    }
   }
 }

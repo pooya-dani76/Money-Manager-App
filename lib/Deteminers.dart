@@ -54,3 +54,22 @@ Map<String, List<String>> getDataFormTitle = {
   'Expense': ['From', 'For'],
   'Transfer': ['From', 'To']
 };
+
+Map<String , String> defaultValues = {
+  'DropDown':'Expense',
+  'OriginAccount' : '',
+  'DestenationAccount':'',
+  'Amount' : '',
+  'Note' : '',
+  'Description' : ''
+};
+
+Transaction defaultTransaction = Transaction(
+    day: DateTime.now().day,
+    month: DateTime.now().month,
+    year: DateTime.now().year,
+    hour: DateTime.now().hour,
+    minute: DateTime.now().minute , 
+    transactionType: 'Expense');
+
+

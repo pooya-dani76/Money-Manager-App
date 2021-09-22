@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 
 class GetDataPage extends StatefulWidget {
   final Transaction transaction;
-  const GetDataPage({Key key, this.transaction}) : super(key: key);
+  GetDataPage({Key key, this.transaction}) : super(key: key);
   @override
   _GetDataPageState createState() => _GetDataPageState();
 }
@@ -22,16 +22,14 @@ class _GetDataPageState extends State<GetDataPage> {
   @override
   void initState() {
     var provider = Provider.of<Controllers>(context, listen: false);
-    provider.setDate(DateTime(widget.transaction.year, widget.transaction.month,
-        widget.transaction.day));
-    provider.setTime(DateTime(
-        widget.transaction.year,
-        widget.transaction.month,
-        widget.transaction.day,
-        widget.transaction.hour,
-        widget.transaction.minute));
-    provider.choosenValueForDropDown = 'Expense';    
+    provider.disposeAllControllers();
+    provider.setInitialValues(widget.transaction);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -42,17 +40,26 @@ class _GetDataPageState extends State<GetDataPage> {
         SolidAppBar(
           isMain: false,
           title: Consumer<Controllers>(
-            builder: (BuildContext context, controllers, Widget child)=> DropdownButton(
-              onChanged: (value){
+            builder: (BuildContext context, controllers, Widget child) =>
+                DropdownButton(
+              onChanged: (value) {
                 controllers.setDropDownValue(value);
               },
-              underline: Container(width: 0, height: 0,),
+              underline: Container(
+                width: 0,
+                height: 0,
+              ),
               value: controllers.choosenValueForDropDown,
-              items: <String>['Income', 'Transfer', 'Expense']
-                  .map((String value) {
-                    return DropdownMenuItem(child: Text(value , textScaleFactor: 1,),value: value,);
-                  })
-                  .toList(),
+              items:
+                  <String>['Income', 'Transfer', 'Expense'].map((String value) {
+                return DropdownMenuItem(
+                  child: Text(
+                    value,
+                    textScaleFactor: 1,
+                  ),
+                  value: value,
+                );
+              }).toList(),
             ),
           ),
           actions: [
@@ -129,20 +136,27 @@ class _GetDataPageState extends State<GetDataPage> {
                         ],
                       )),
                   GetFormField(
+                    formKey: controllers.originAccountKey,
                     prefixIcon: Icon(FontAwesomeIcons.wallet),
-                    lebelText: getDataFormTitle[controllers.choosenValueForDropDown][0],
+                    lebelText:
+                        getDataFormTitle[controllers.choosenValueForDropDown]
+                            [0],
                     keyboardType: 'text',
-                    controller: controllers.accountController,
+                    controller: controllers.originAccountController,
                     expands: false,
                   ),
                   GetFormField(
+                    formKey: controllers.destenationAccountKey,
                     prefixIcon: Icon(FontAwesomeIcons.moneyBillAlt),
-                    lebelText: getDataFormTitle[controllers.choosenValueForDropDown][1],
+                    lebelText:
+                        getDataFormTitle[controllers.choosenValueForDropDown]
+                            [1],
                     keyboardType: 'text',
                     controller: controllers.destenationAccountController,
                     expands: false,
                   ),
                   GetFormField(
+                    formKey: controllers.amountKey,
                     prefixIcon: Icon(FontAwesomeIcons.dollarSign),
                     lebelText: 'Amount',
                     keyboardType: 'number',

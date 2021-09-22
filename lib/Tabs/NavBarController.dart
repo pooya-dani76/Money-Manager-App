@@ -31,12 +31,7 @@ class _NavBarControllerState extends State<NavBarController> {
               context,
               MaterialPageRoute(
                   builder: (context) => GetDataPage(
-                        transaction: Transaction(
-                            day: DateTime.now().day,
-                            month: DateTime.now().month,
-                            year: DateTime.now().year,
-                            hour: DateTime.now().hour,
-                            minute: DateTime.now().minute),
+                        transaction: defaultTransaction,
                       )));
         },
         // ()=>incrementCounter(provider),

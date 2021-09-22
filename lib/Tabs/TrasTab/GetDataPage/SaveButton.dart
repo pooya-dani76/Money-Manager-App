@@ -12,8 +12,10 @@ class SaveButton extends StatefulWidget {
 class _SaveButtonState extends State<SaveButton> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeSetter>(
-      builder: (BuildContext context, themeSetter, Widget child) => Container(
+    return Consumer3<Controllers, ThemeSetter, TransactionProvider>(
+      builder: (BuildContext context, controllers, themeSetter,
+              transactionProvider, Widget child) =>
+          Container(
         alignment: Alignment.center,
         padding: EdgeInsets.only(top: 25, right: 20, left: 20, bottom: 30),
         child: TextButton(
@@ -30,8 +32,15 @@ class _SaveButtonState extends State<SaveButton> {
                 width: 3.0),
           ),
           onPressed: () {
-            
-            // Navigator.pop(context);
+            if (controllers.originAccountKey.currentState.validate() &&
+                controllers.destenationAccountKey.currentState.validate() &&
+                controllers.amountKey.currentState.validate()) {
+              print(controllers.validateFields());
+              controllers.addCurrentTransactionToDataBase();
+              transactionProvider.loadInfo();
+              transactionProvider.refresh();
+              Navigator.pop(context);
+            }
           },
           child: Text(
             'Save',
