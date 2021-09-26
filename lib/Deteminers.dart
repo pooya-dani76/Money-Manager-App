@@ -37,7 +37,7 @@ String subTitleDeterminer(Transaction tr) {
       return tr.destenationAccount;
     case 'Expense':
       return tr.originAccount;
-    case 'Total':
+    case 'Transfer':
       return '${tr.originAccount} -> ${tr.destenationAccount}';
   }
 }

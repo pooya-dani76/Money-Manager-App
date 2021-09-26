@@ -16,7 +16,7 @@ void main() async {
     final dtb = SqliteDB();
     createTable();
     // checkTableExist();
-    await dtb.countTable();
+    // await dtb.countTable();
   } catch (e) {
     print('ErrorS1: $e');
   }

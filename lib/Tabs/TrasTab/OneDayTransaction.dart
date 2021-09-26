@@ -34,7 +34,7 @@ class _OneDayTransactionState extends State<OneDayTransaction> {
     return Consumer<TransactionProvider>(
       builder: (BuildContext context, transactionProvider, Widget child) {
         return Container(
-          height: (51 + (widget.oneDayTransactions.length * 50))
+          height: (51 + (widget.oneDayTransactions.length * 55))
               .toDouble(),
           child: Column(
             children: [

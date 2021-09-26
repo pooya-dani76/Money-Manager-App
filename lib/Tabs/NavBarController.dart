@@ -77,7 +77,6 @@ class _NavBarControllerState extends State<NavBarController> {
 
 void incrementCounter(TransactionProvider provider) async {
   var insertor;
-  checkTableExist();
   try {
     insertor = await insertTranscation(Transaction(
         transactionId: 1,

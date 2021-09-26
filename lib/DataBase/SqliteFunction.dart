@@ -27,15 +27,15 @@ class SqliteDB {
     return taskDB;
   }
 
-  Future countTable() async {
-    var dbClient = await db;
-    var res =
-        await dbClient.rawQuery("""SELECT count(*) as count FROM sqlite_master
-         WHERE type = 'table' 
-         AND name != 'android_metadata' 
-         AND name != 'sqlite_sequence';""");
-    return res[0]['count'];
-  }
+  // Future countTable() async {
+  //   var dbClient = await db;
+  //   var res =
+  //       await dbClient.rawQuery("""SELECT count(*) as count FROM sqlite_master
+  //        WHERE type = 'table' 
+  //        AND name != 'android_metadata' 
+  //        AND name != 'sqlite_sequence';""");
+  //   return res[0]['count'];
+  // }
 }
 
 Future createTable() async {
@@ -57,25 +57,25 @@ Future createTable() async {
   return res;
 }
 
-Future checkTableExist()async{
-    // ignore: unused_local_variable
-    var creator;
-    int tableCounter;
-    try {
-      final db = SqliteDB();
-      tableCounter = await db.countTable();
-    } catch (e) {
-      print('Error1: $e');
-    }
+// Future checkTableExist()async{
+//     // ignore: unused_local_variable
+//     var creator;
+//     int tableCounter;
+//     try {
+//       final db = SqliteDB();
+//       tableCounter = await db.countTable();
+//     } catch (e) {
+//       print('Error1: $e');
+//     }
 
-    if (tableCounter == 0) {
-      try {
-        creator = await createTable();
-      } catch (e) {
-        print('Error2: $e');
-      }
-    }
-}
+//     if (tableCounter == 0) {
+//       try {
+//         creator = await createTable();
+//       } catch (e) {
+//         print('Error2: $e');
+//       }
+//     }
+// }
 
 Future insertTranscation(data.Transaction transaction) async {
   dynamic temp = transaction.toMap();

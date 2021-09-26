@@ -24,7 +24,7 @@ class _TransactionTileState extends State<TransactionTile> {
               builder: (context) =>
                   GetDataPage(transaction: widget.transaction))),
       child: Container(
-        height: 50,
+        height: 55,
         child: Row(
           children: [
             Expanded(
